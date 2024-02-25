@@ -1,5 +1,7 @@
 package com.example.WebDev.Entity;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "roles")
+@EntityListeners(AuditingEntityListener.class)
 public class Role {
 
     @Id

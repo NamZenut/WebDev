@@ -8,17 +8,18 @@ import com.example.WebDev.Repository.RoleRepository;
 import com.example.WebDev.Repository.UserRepository;
 import com.example.WebDev.Service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
+@Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public void saveUser(UserDto userDto) {
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setUsername(userDto.getUserName());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setPassword(userDto.getPassword());
 
         Role role = new Role(Roles.USER, "User");
         user.setRole(role);
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    private UserDto mapToUserDto (User user) {
+    private UserDto mapToUserDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
